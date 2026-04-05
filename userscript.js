@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         🥚 Ultimate Easter Egg Hunter
 // @namespace    https://torn.com/
-// @version      1.4.5
+// @version      1.6.1
 // @description  The most advanced Easter Egg Navigator for Torn — 100+ unique pages, premium UI, smart detection, mobile-ready.
 // @match        https://www.torn.com/*
 // @author       sercann
@@ -32,6 +32,7 @@ const PAGES = [
     { label: "Personal Stats",                  url: "/personalstats.php" },
     { label: "Player Report",                   url: "/playerreport.php" },
     { label: "Activity Log",                    url: "/page.php?sid=log" },
+    { label: "Attack Log",                      url: "/loader.php?sid=attackLog" },
     { label: "Events",                          url: "/page.php?sid=events" },
     { label: "Profile",                         url: "/profiles.php?XID=1" },
     { label: "Awards",                          url: "/page.php?sid=awards" },
@@ -42,10 +43,10 @@ const PAGES = [
     { label: "City Stats",                      url: "/citystats.php" },
     { label: "Users Online",                    url: "/usersonline.php" },
     { label: "User List",                       url: "/page.php?sid=UserList" },
-    { label: "People",                          url: "/index.php?page=people" },
-    { label: "Fortune Teller",                  url: "/index.php?page=fortune" },
-    { label: "Rehab",                           url: "/index.php?page=rehab" },
-    { label: "Hunting",                         url: "/index.php?page=hunting" },
+    { label: "Peoples",                         url: "/index.php?page=people", overseas: true },
+    { label: "Fortune Teller",                  url: "/index.php?page=fortune", overseas: true },
+    { label: "Rehab",                           url: "/index.php?page=rehab", overseas: true },
+    { label: "Hunting",                         url: "/index.php?page=hunting", overseas: true },
     { label: "Items",                           url: "/item.php" },
     { label: "Item Mods",                       url: "/page.php?sid=itemsMods" },
     { label: "Ammo",                            url: "/page.php?sid=ammo" },
@@ -82,6 +83,8 @@ const PAGES = [
     { label: "Clothes Shop",                    url: "/shops.php?step=clothes" },
     { label: "Bunker",                          url: "/page.php?sid=bunker" },
     { label: "Properties",                      url: "/properties.php" },
+    { label: "Rental Market",                   url: "/properties.php?step=rentalmarket" },
+    { label: "Selling Market",                  url: "/properties.php?step=sellingmarket" },
     { label: "Estate Agents",                   url: "/estateagents.php" },
     { label: "Casino",                          url: "/casino.php" },
     { label: "Slots",                           url: "/page.php?sid=slots" },
@@ -131,7 +134,33 @@ const PAGES = [
     { label: "Competition",                     url: "/competition.php" },
     { label: "Church",                          url: "/church.php" },
     { label: "Blacklist",                       url: "/blacklist.php" },
-    { label: "Christmas Town",                  url: "/christmas_town.php" }
+    { label: "Christmas Town",                  url: "/christmas_town.php" },
+    { label: "Classified Ads",                  url: "/newspaper_class.php" },
+    { label: "Gallery",                         url: "/page.php?sid=gallery" },
+    { label: "Chain Report",                    url: "/war.php?step=chainreport" },
+    { label: "War Report",                      url: "/war.php?step=warreport" },
+    { label: "Rank Report",                     url: "/war.php?step=rankreport" },
+    { label: "Raid Report",                     url: "/war.php?step=raidreport" },
+    { label: "Church Proposals",                url: "/church.php?step=proposals" },
+    { label: "Slots Stats",                     url: "/page.php?sid=slotsStats" },
+    { label: "Slots Last Rolls",                url: "/page.php?sid=slotsLastRolls" },
+    { label: "Roulette Stats",                  url: "/page.php?sid=rouletteStatistics" },
+    { label: "Roulette Last Spins",             url: "/page.php?sid=rouletteLastSpins" },
+    { label: "High/Low Stats",                  url: "/page.php?sid=highlowStats" },
+    { label: "High/Low Last Games",             url: "/page.php?sid=highlowLastGames" },
+    { label: "Keno Stats",                      url: "/page.php?sid=kenoStatistics" },
+    { label: "Keno Last Games",                 url: "/page.php?sid=kenoLastGames" },
+    { label: "Craps Stats",                     url: "/page.php?sid=crapsStats" },
+    { label: "Craps Last Rolls",                url: "/page.php?sid=crapsLastRolls" },
+    { label: "Blackjack Stats",                 url: "/page.php?sid=blackjackStatistics" },
+    { label: "Blackjack Last Games",             url: "/page.php?sid=blackjackLastGames" },
+    { label: "Hold'em Stats",                   url: "/page.php?sid=holdemStats" },
+    { label: "RR Stats",                        url: "/page.php?sid=russianRouletteStatistics" },
+    { label: "RR Last Games",                   url: "/page.php?sid=russianRouletteLastGames" },
+    { label: "Lottery Bought",                  url: "/page.php?sid=lotteryTicketsBought" },
+    { label: "Lottery Winners",                 url: "/page.php?sid=lotteryPreviousWinners" },
+    { label: "Player Bazaar",                   url: "/bazaar.php?userId=1" },
+    { label: "Wheel Last Spins",                url: "/page.php?sid=spinTheWheelLastSpins" }
 ];
 
 function loadState() {
@@ -156,6 +185,7 @@ const state = Object.assign({
     eggsFound: 0,
     visited:   [],
     filter:    '',
+    boomerMode: false
 }, loadState());
 
 function persist() { saveState(state); }
@@ -166,7 +196,6 @@ GM_addStyle(`
     font-family: 'Segoe UI', system-ui, sans-serif;
     line-height: 1.4;
 }
-
 #ueeh-panel {
     position: fixed;
     z-index: 2147483647;
@@ -179,15 +208,12 @@ GM_addStyle(`
         0 2px 8px rgba(0,0,0,0.4);
     backdrop-filter: blur(12px) saturate(1.4);
     -webkit-backdrop-filter: blur(12px) saturate(1.4);
-    background: linear-gradient(160deg,
-        rgba(28,24,18,0.95) 0%,
-        rgba(22,19,14,0.95) 100%);
+    background: linear-gradient(160deg, rgba(28,24,18,0.95) 0%, rgba(22,19,14,0.95) 100%);
     border: 1px solid rgba(255,200,50,0.22);
     transition: box-shadow 0.2s;
     user-select: none;
     will-change: transform, opacity;
 }
-
 #ueeh-panel.ueeh-egg-glow {
     box-shadow:
         0 0 0 2px rgba(255,215,0,0.7),
@@ -195,26 +221,20 @@ GM_addStyle(`
         0 8px 40px rgba(0,0,0,0.55);
     animation: ueeh-pulse 0.8s ease-in-out 3;
 }
-
 @keyframes ueeh-pulse {
     0%,100% { box-shadow: 0 0 0 2px rgba(255,215,0,0.7), 0 0 28px 6px rgba(255,200,50,0.45), 0 8px 40px rgba(0,0,0,0.55); }
     50%      { box-shadow: 0 0 0 3px rgba(255,215,0,1),   0 0 50px 14px rgba(255,200,50,0.7), 0 8px 40px rgba(0,0,0,0.55); }
 }
-
 #ueeh-header {
     display: flex;
     align-items: center;
     gap: 4px;
     padding: 10px 10px 9px;
     cursor: grab;
-    background: linear-gradient(90deg,
-        rgba(255,200,50,0.12) 0%,
-        rgba(255,170,30,0.06) 100%);
+    background: linear-gradient(90deg, rgba(255,200,50,0.12) 0%, rgba(255,170,30,0.06) 100%);
     border-bottom: 1px solid rgba(255,200,50,0.15);
 }
-
 #ueeh-header:active { cursor: grabbing; }
-
 #ueeh-egg-icon {
     flex-shrink: 0;
     width: 22px;
@@ -225,12 +245,10 @@ GM_addStyle(`
     filter: drop-shadow(0 0 5px rgba(255,210,60,0.6));
     animation: ueeh-bob 3s ease-in-out infinite;
 }
-
 @keyframes ueeh-bob {
     0%,100% { transform: translateY(0); }
     50%      { transform: translateY(-2px); }
 }
-
 #ueeh-title {
     flex: 1;
     font-size: 10.5px;
@@ -243,7 +261,6 @@ GM_addStyle(`
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 #ueeh-egg-badge {
     font-size: 10px;
     font-weight: 800;
@@ -256,7 +273,6 @@ GM_addStyle(`
     min-width: 28px;
     text-align: center;
 }
-
 .ueeh-hdr-btn {
     width: 20px;
     height: 20px;
@@ -273,12 +289,45 @@ GM_addStyle(`
     padding: 0;
     transition: background 0.15s, color 0.15s;
 }
-
 .ueeh-hdr-btn:hover {
     background: rgba(255,200,50,0.18);
     color: #f5d060;
 }
-
+#ueeh-panel:not(.collapsed) #ueeh-hdr-support {
+    display: none;
+}
+#ueeh-action-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 5px 12px;
+    background: rgba(0,0,0,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.ueeh-action-btn {
+    width: 26px;
+    height: 26px;
+    border: none;
+    background: rgba(255,255,255,0.07);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 13px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+.ueeh-action-btn:hover {
+    background: rgba(255,200,50,0.18);
+    color: #f5d060;
+    transform: translateY(-1px);
+}
+.ueeh-action-btn:active {
+    transform: scale(0.9);
+}
 #ueeh-mini-btn {
     position: fixed;
     width: 44px;
@@ -296,37 +345,30 @@ GM_addStyle(`
     transition: transform 0.2s, box-shadow 0.2s;
     touch-action: none;
 }
-
 #ueeh-mini-btn:hover {
     transform: scale(1.08);
     box-shadow: 0 6px 20px rgba(0,0,0,0.6), 0 0 15px rgba(255,200,50,0.4);
 }
-
 #ueeh-body {
     display: flex;
     flex-direction: column;
     gap: 0;
     overflow: hidden;
-    transition: max-height 0.25s cubic-bezier(0.4,0,0.2,1),
-                opacity    0.2s ease;
-    max-height: 400px;
+    transition: max-height 0.25s cubic-bezier(0.4,0,0.2,1), opacity 0.2s ease;
+    max-height: 440px;
     opacity: 1;
 }
-
 #ueeh-panel.collapsed #ueeh-body {
     max-height: 0;
     opacity: 0;
 }
-
 #ueeh-panel.collapsed #ueeh-controls {
     border-top-color: transparent;
 }
-
 #ueeh-progress-wrap {
     padding: 8px 12px 6px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-
 #ueeh-progress-track {
     height: 4px;
     border-radius: 2px;
@@ -334,7 +376,6 @@ GM_addStyle(`
     overflow: hidden;
     margin-bottom: 4px;
 }
-
 #ueeh-progress-fill {
     height: 100%;
     border-radius: 2px;
@@ -342,16 +383,13 @@ GM_addStyle(`
     transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
     box-shadow: 0 0 8px rgba(245,166,35,0.5);
 }
-
 #ueeh-progress-label {
     font-size: 10px;
     color: rgba(255,255,255,0.4);
     display: flex;
     justify-content: space-between;
 }
-
 #ueeh-progress-label span { color: rgba(255,200,50,0.8); }
-
 #ueeh-current-page {
     padding: 6px 12px;
     font-size: 10px;
@@ -361,17 +399,14 @@ GM_addStyle(`
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
 #ueeh-current-page em {
     font-style: normal;
     color: rgba(255,200,50,0.7);
 }
-
 #ueeh-search-wrap {
     padding: 7px 10px 5px;
     border-bottom: 1px solid rgba(255,255,255,0.06);
 }
-
 #ueeh-search {
     width: 100%;
     background: rgba(255,255,255,0.07);
@@ -383,30 +418,25 @@ GM_addStyle(`
     outline: none;
     transition: border-color 0.2s, background 0.2s;
 }
-
 #ueeh-search::placeholder { color: rgba(255,255,255,0.28); }
-
 #ueeh-search:focus {
     border-color: rgba(245,166,35,0.5);
     background: rgba(255,255,255,0.1);
 }
-
 #ueeh-list-wrap {
-    max-height: 170px;
+    max-height: 150px;
     overflow-y: auto;
     overflow-x: hidden;
     padding: 4px 0;
     scrollbar-width: thin;
     scrollbar-color: rgba(245,166,35,0.3) transparent;
 }
-
 #ueeh-list-wrap::-webkit-scrollbar      { width: 4px; }
 #ueeh-list-wrap::-webkit-scrollbar-track { background: transparent; }
 #ueeh-list-wrap::-webkit-scrollbar-thumb {
     background: rgba(245,166,35,0.3);
     border-radius: 2px;
 }
-
 .ueeh-page-item {
     display: flex;
     align-items: center;
@@ -418,20 +448,16 @@ GM_addStyle(`
     color: rgba(255,255,255,0.75);
     text-decoration: none;
 }
-
 .ueeh-page-item:hover {
     background: rgba(255,200,50,0.1);
     color: #fff;
 }
-
 .ueeh-page-item.ueeh-active {
     background: rgba(245,166,35,0.2);
     color: #f5d060;
     font-weight: 600;
 }
-
 .ueeh-page-item.ueeh-visited .ueeh-check { opacity: 1; color: #4caf50; }
-
 .ueeh-page-num {
     font-size: 9px;
     color: rgba(255,255,255,0.22);
@@ -439,29 +465,34 @@ GM_addStyle(`
     text-align: right;
     flex-shrink: 0;
 }
-
 .ueeh-page-label {
     flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
+.ueeh-page-overseas {
+    font-size: 8px;
+    color: #e8691e;
+    border: 1px solid #e8691e;
+    border-radius: 4px;
+    padding: 1px 4px;
+    flex-shrink: 0;
+}
 .ueeh-check {
     font-size: 10px;
     opacity: 0.15;
     color: #fff;
     flex-shrink: 0;
 }
-
-#ueeh-controls {
+#ueeh-controls-expanded {
     padding: 8px 10px;
     display: flex;
     gap: 6px;
     align-items: center;
     border-top: 1px solid rgba(255,255,255,0.07);
 }
-
+#ueeh-panel.collapsed #ueeh-controls-expanded { display: none; }
 .ueeh-btn {
     border: none;
     border-radius: 8px;
@@ -477,9 +508,7 @@ GM_addStyle(`
     position: relative;
     overflow: hidden;
 }
-
 .ueeh-btn:active { transform: scale(0.93); }
-
 .ueeh-btn-prev {
     width: 32px;
     height: 32px;
@@ -489,13 +518,11 @@ GM_addStyle(`
     padding: 0;
     font-size: 14px;
 }
-
 .ueeh-btn-prev:hover {
     background: rgba(255,255,255,0.14);
     color: #fff;
 }
-
-.ueeh-btn-next {
+.ueeh-btn-next-exp {
     flex: 1;
     height: 32px;
     background: linear-gradient(135deg, #f5a623 0%, #e8691e 100%);
@@ -505,25 +532,85 @@ GM_addStyle(`
     box-shadow: 0 2px 12px rgba(245,166,35,0.35);
     text-transform: uppercase;
 }
-
-.ueeh-btn-next:hover {
+.ueeh-btn-next-exp:hover {
     filter: brightness(1.12);
     box-shadow: 0 3px 18px rgba(245,166,35,0.5);
 }
-
+#ueeh-controls-compact {
+    padding: 8px 10px;
+    display: none;
+    gap: 10px;
+    align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.07);
+    background: rgba(0,0,0,0.2);
+    border-radius: 0 0 13px 13px;
+}
+#ueeh-panel.collapsed #ueeh-controls-compact { display: flex; }
+.ueeh-nav-btns { display: flex; gap: 5px; }
+.ueeh-nav-btn {
+    width: 34px;
+    height: 32px;
+    border: none;
+    border-radius: 8px;
+    background: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.7);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+}
+.ueeh-nav-btn:hover { background: rgba(245,166,35,0.2); color: #f5d060; }
+.ueeh-nav-btn:active { transform: scale(0.9); }
+.ueeh-btn-next-cmp {
+    background: linear-gradient(135deg, #f5a623 0%, #e8691e 100%);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(245,166,35,0.25);
+}
+.ueeh-btn-next-cmp:hover { filter: brightness(1.15); color: #fff; box-shadow: 0 3px 12px rgba(245,166,35,0.4); }
+#ueeh-nav-core {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    overflow: hidden;
+}
+#ueeh-nav-stats {
+    display: flex;
+    justify-content: space-between;
+    font-size: 9.5px;
+    color: rgba(255,255,255,0.5);
+    white-space: nowrap;
+}
+#ueeh-nav-stats span { color: rgba(255,200,50,0.9); font-weight: 600; }
+#ueeh-nav-track {
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.1);
+    overflow: hidden;
+    width: 100%;
+}
+#ueeh-nav-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f5a623, #f5d060);
+    width: 0%;
+    transition: width 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 0 0 5px rgba(245,166,35,0.4);
+}
 #ueeh-jump-row {
     display: flex;
     align-items: center;
     gap: 5px;
     padding: 0 10px 9px;
 }
-
 #ueeh-jump-row label {
     font-size: 10px;
     color: rgba(255,255,255,0.3);
     flex-shrink: 0;
 }
-
 #ueeh-jump-input {
     width: 52px;
     background: rgba(255,255,255,0.07);
@@ -536,18 +623,14 @@ GM_addStyle(`
     text-align: center;
     -moz-appearance: textfield;
 }
-
 #ueeh-jump-input::-webkit-inner-spin-button,
 #ueeh-jump-input::-webkit-outer-spin-button { -webkit-appearance: none; }
-
 #ueeh-jump-input:focus { border-color: rgba(245,166,35,0.5); }
-
 #ueeh-jump-total {
     font-size: 10px;
     color: rgba(255,255,255,0.25);
     flex-shrink: 0;
 }
-
 #ueeh-jump-go {
     flex: 1;
     padding: 4px 8px;
@@ -562,9 +645,25 @@ GM_addStyle(`
     transition: background 0.15s;
     letter-spacing: 0.04em;
 }
-
 #ueeh-jump-go:hover { background: rgba(245,166,35,0.35); }
-
+#ueeh-footer {
+    padding: 6px 10px;
+    text-align: center;
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.4);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.03em;
+}
+#ueeh-footer a {
+    color: rgba(245, 166, 35, 0.8);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.15s;
+}
+#ueeh-footer a:hover {
+    color: #f5d060;
+}
 #ueeh-toast {
     position: fixed;
     bottom: 24px;
@@ -584,26 +683,22 @@ GM_addStyle(`
     pointer-events: none;
     max-width: 90vw;
 }
-
 #ueeh-toast.show {
     transform: translateX(-50%) translateY(0);
     opacity: 1;
     pointer-events: auto;
 }
-
 #ueeh-toast-icon {
     font-size: 28px;
     animation: ueeh-wobble 0.5s ease-out 0.1s both;
     flex-shrink: 0;
     filter: drop-shadow(0 0 8px rgba(255,200,50,0.7));
 }
-
 @keyframes ueeh-wobble {
     0%   { transform: rotate(-15deg) scale(0.7); }
     50%  { transform: rotate(8deg)  scale(1.15); }
     100% { transform: rotate(0deg)  scale(1); }
 }
-
 #ueeh-toast-text { flex: 1; }
 #ueeh-toast-title {
     font-size: 13px;
@@ -616,7 +711,6 @@ GM_addStyle(`
     color: rgba(255,255,255,0.55);
     margin-top: 2px;
 }
-
 #ueeh-toast-close {
     background: none;
     border: none;
@@ -628,9 +722,7 @@ GM_addStyle(`
     flex-shrink: 0;
     transition: color 0.15s;
 }
-
 #ueeh-toast-close:hover { color: rgba(255,255,255,0.9); }
-
 #easter-egg-hunt-root button.__ueeh-repositioned {
     position: fixed !important;
     top: 50% !important;
@@ -651,12 +743,10 @@ GM_addStyle(`
     overflow: visible !important;
     background: transparent !important;
 }
-
 @keyframes ueeh-egg-appear {
     from { transform: translate(-50%,-50%) scale(0.4) rotate(-8deg); opacity: 0; }
     to   { transform: translate(-50%,-50%) scale(1)   rotate(0deg);  opacity: 1; }
 }
-
 #easter-egg-hunt-root button.__ueeh-repositioned img,
 #easter-egg-hunt-root button.__ueeh-repositioned > *:first-child {
     width: 100% !important;
@@ -664,25 +754,171 @@ GM_addStyle(`
     object-fit: contain !important;
 }
 
-#ueeh-footer {
-    padding: 6px 10px;
-    text-align: center;
-    font-size: 9px;
-    color: rgba(255, 255, 255, 0.4);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.2);
-    letter-spacing: 0.03em;
+/* =========================================================
+   🥔 HATER / BOOMER MODE (Windows XP Theme) 🥔
+   ========================================================= */
+#ueeh-panel.ueeh-boomer-mode {
+    background: #ECE9D8;
+    border: 1px solid #0054E3;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 }
-
-#ueeh-footer a {
-    color: rgba(245, 166, 35, 0.8);
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.15s;
+#ueeh-panel.ueeh-boomer-mode #ueeh-header {
+    background: linear-gradient(180deg, #0058e6 0%, #3a93ff 8%, #288eff 40%, #127dff 88%, #036bfe 100%);
+    border-bottom: 1px solid #003C9D;
+    border-radius: 3px 3px 0 0;
+    padding: 5px;
 }
-
-#ueeh-footer a:hover {
-    color: #f5d060;
+#ueeh-panel.ueeh-boomer-mode #ueeh-title {
+    color: #FFF;
+    text-shadow: 1px 1px 1px #000;
+    font-family: 'Trebuchet MS', Tahoma, sans-serif;
+    font-weight: bold;
+}
+#ueeh-panel.ueeh-boomer-mode * {
+    font-family: Tahoma, 'Trebuchet MS', sans-serif !important;
+    color: #000;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-hdr-btn {
+    background: #ECE9D8;
+    border: 1px outset #FFF;
+    color: #000;
+    border-radius: 2px;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-hdr-btn:active {
+    border: 1px inset #FFF;
+    background: #D4D0C8;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-egg-badge {
+    background: #FFF;
+    color: #000;
+    border: 1px inset #ACA899;
+    box-shadow: none;
+    border-radius: 0;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-action-row {
+    background: #ECE9D8;
+    border-bottom: 1px solid #ACA899;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-action-btn {
+    background: #ECE9D8;
+    border: 1px outset #FFF;
+    color: #000;
+    border-radius: 2px;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-action-btn:active {
+    border: 1px inset #FFF;
+    background: #D4D0C8;
+    transform: none;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-progress-wrap,
+#ueeh-panel.ueeh-boomer-mode #ueeh-current-page,
+#ueeh-panel.ueeh-boomer-mode #ueeh-search-wrap,
+#ueeh-panel.ueeh-boomer-mode #ueeh-controls-expanded,
+#ueeh-panel.ueeh-boomer-mode #ueeh-controls-compact,
+#ueeh-panel.ueeh-boomer-mode #ueeh-footer {
+    border-color: #ACA899;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-search {
+    background: #FFF;
+    border: 1px inset #7F9DB9;
+    color: #000;
+    border-radius: 0;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item { color: #000; }
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item:hover {
+    background: #316AC5;
+    color: #FFF;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item:hover * { color: #FFF; }
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item.ueeh-active {
+    background: #000080;
+    color: #FFF;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item.ueeh-active * { color: #FFF; }
+#ueeh-panel.ueeh-boomer-mode .ueeh-btn,
+#ueeh-panel.ueeh-boomer-mode .ueeh-nav-btn,
+#ueeh-panel.ueeh-boomer-mode #ueeh-jump-go {
+    background: #ECE9D8;
+    border: 2px outset #FFF;
+    color: #000;
+    border-radius: 3px;
+    box-shadow: none;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-btn:active,
+#ueeh-panel.ueeh-boomer-mode .ueeh-nav-btn:active,
+#ueeh-panel.ueeh-boomer-mode #ueeh-jump-go:active {
+    border: 2px inset #FFF;
+    background: #D4D0C8;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-progress-track,
+#ueeh-panel.ueeh-boomer-mode #ueeh-nav-track {
+    background: #FFF;
+    border: 1px inset #ACA899;
+    border-radius: 0;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-progress-fill,
+#ueeh-panel.ueeh-boomer-mode #ueeh-nav-fill {
+    background: linear-gradient(180deg, #28E12A 0%, #15B816 100%);
+    box-shadow: none;
+    border-radius: 0;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-progress-label span,
+#ueeh-panel.ueeh-boomer-mode #ueeh-current-page em,
+#ueeh-panel.ueeh-boomer-mode #ueeh-nav-stats span,
+#ueeh-panel.ueeh-boomer-mode #ueeh-jump-total {
+    color: #000;
+    font-weight: bold;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-overseas {
+    border-color: #000;
+    color: #000;
+}
+#ueeh-panel.ueeh-boomer-mode .ueeh-check { color: #000; }
+#ueeh-panel.ueeh-boomer-mode .ueeh-page-item.ueeh-visited .ueeh-check {
+    opacity: 1;
+    color: #15B816 !important;
+    font-weight: bold;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-jump-input {
+    background: #FFF;
+    border: 1px inset #7F9DB9;
+    color: #000;
+    border-radius: 0;
+}
+#ueeh-panel.ueeh-boomer-mode #ueeh-controls-compact { background: #ECE9D8; }
+#ueeh-panel.ueeh-boomer-mode #ueeh-footer a {
+    color: #0000EE;
+    text-decoration: underline;
+}
+#ueeh-toast.ueeh-boomer-mode {
+    background: #FFFFCC;
+    border: 1px solid #000;
+    border-radius: 0;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+    color: #000;
+}
+#ueeh-toast.ueeh-boomer-mode * {
+    color: #000 !important;
+    text-shadow: none !important;
+    font-family: Tahoma, sans-serif !important;
+}
+#ueeh-mini-btn.ueeh-boomer-mode {
+    background: #ECE9D8;
+    border: 2px outset #FFF;
+    border-radius: 4px;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+}
+#ueeh-mini-btn.ueeh-boomer-mode:hover {
+    transform: none;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    filter: brightness(1.05);
+}
+#ueeh-mini-btn.ueeh-boomer-mode:active {
+    border: 2px inset #FFF;
+    background: #D4D0C8;
 }
 
 @media (max-width: 768px) {
@@ -698,7 +934,7 @@ GM_addStyle(`
 }
 `);
 
-let panel, listWrap, progressFill, progressLabel,
+let panel, listWrap, progressFill, progressLabel, navProgFill, navStats,
     jumpInput, searchInput, currentPageEl, eggBadge;
 let miniBtn;
 
@@ -712,6 +948,9 @@ function applyHiddenState() {
             miniBtn.title = 'Show Panel';
             document.body.appendChild(miniBtn);
             makePillDraggable(miniBtn);
+            if (state.boomerMode) {
+                miniBtn.classList.add('ueeh-boomer-mode');
+            }
         }
         miniBtn.style.display = 'flex';
 
@@ -727,6 +966,18 @@ function applyHiddenState() {
     } else {
         panel.style.display = '';
         if (miniBtn) miniBtn.style.display = 'none';
+    }
+}
+
+function applyBoomerMode() {
+    if (state.boomerMode) {
+        if (panel) panel.classList.add('ueeh-boomer-mode');
+        if (toastEl) toastEl.classList.add('ueeh-boomer-mode');
+        if (miniBtn) miniBtn.classList.add('ueeh-boomer-mode');
+    } else {
+        if (panel) panel.classList.remove('ueeh-boomer-mode');
+        if (toastEl) toastEl.classList.remove('ueeh-boomer-mode');
+        if (miniBtn) miniBtn.classList.remove('ueeh-boomer-mode');
     }
 }
 
@@ -755,32 +1006,14 @@ function buildPanel() {
     eggBadge.id = 'ueeh-egg-badge';
     eggBadge.textContent = '🥚 ' + state.eggsFound;
 
-    const resetEggsBtn = document.createElement('button');
-    resetEggsBtn.className = 'ueeh-hdr-btn';
-    resetEggsBtn.innerHTML = '⓪';
-    resetEggsBtn.title = 'Reset Eggs Found';
-    resetEggsBtn.addEventListener('click', (e) => {
+    const supportBtnCompact = document.createElement('button');
+    supportBtnCompact.id = 'ueeh-hdr-support';
+    supportBtnCompact.className = 'ueeh-hdr-btn';
+    supportBtnCompact.innerHTML = '💬';
+    supportBtnCompact.title = 'Official Forum Thread';
+    supportBtnCompact.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (confirm('Reset eggs found counter?')) {
-            state.eggsFound = 0;
-            eggBadge.textContent = '🥚 ' + state.eggsFound;
-            persist();
-        }
-    });
-
-    const resetBtn = document.createElement('button');
-    resetBtn.className = 'ueeh-hdr-btn';
-    resetBtn.innerHTML = '↺';
-    resetBtn.title = 'Reset Checkpoints';
-    resetBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        if (confirm('Reset all visited checkpoints?')) {
-            state.visited = [];
-            state.idx = 0;
-            persist();
-            renderList(false);
-            updateUI();
-        }
+        window.open('https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0', '_blank');
     });
 
     const collapseBtn = document.createElement('button');
@@ -806,10 +1039,71 @@ function buildPanel() {
         applyHiddenState();
     });
 
-    header.append(eggIcon, title, eggBadge, resetEggsBtn, resetBtn, collapseBtn, hideBtn);
+    header.append(eggIcon, title, eggBadge, supportBtnCompact, collapseBtn, hideBtn);
 
     const body = document.createElement('div');
     body.id = 'ueeh-body';
+
+    const actionRow = document.createElement('div');
+    actionRow.id = 'ueeh-action-row';
+
+    const boomerBtn = document.createElement('button');
+    boomerBtn.className = 'ueeh-action-btn';
+    boomerBtn.innerHTML = '🥔';
+    boomerBtn.title = 'Boomer Mode';
+    boomerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (!state.boomerMode) {
+            if (confirm("I am an old grandpa and an AI hater who dislikes modern UI appearances. Please give me the potato theme.")) {
+                state.boomerMode = true;
+                persist();
+                applyBoomerMode();
+            }
+        } else {
+            state.boomerMode = false;
+            persist();
+            applyBoomerMode();
+        }
+    });
+
+    const resetEggsBtn = document.createElement('button');
+    resetEggsBtn.className = 'ueeh-action-btn';
+    resetEggsBtn.innerHTML = '🗑️';
+    resetEggsBtn.title = 'Clear Eggs Found';
+    resetEggsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (confirm('Clear eggs found counter?')) {
+            state.eggsFound = 0;
+            eggBadge.textContent = '🥚 ' + state.eggsFound;
+            persist();
+        }
+    });
+
+    const resetBtn = document.createElement('button');
+    resetBtn.className = 'ueeh-action-btn';
+    resetBtn.innerHTML = '↺';
+    resetBtn.title = 'Reset Checkpoints';
+    resetBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (confirm('Reset all visited checkpoints?')) {
+            state.visited = [];
+            state.idx = 0;
+            persist();
+            renderList(false);
+            updateUI();
+        }
+    });
+
+    const supportBtnMain = document.createElement('button');
+    supportBtnMain.className = 'ueeh-action-btn';
+    supportBtnMain.innerHTML = '💬';
+    supportBtnMain.title = 'Official Forum Thread';
+    supportBtnMain.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open('https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0', '_blank');
+    });
+
+    actionRow.append(boomerBtn, resetEggsBtn, resetBtn, supportBtnMain);
 
     const progWrap = document.createElement('div');
     progWrap.id = 'ueeh-progress-wrap';
@@ -840,23 +1134,6 @@ function buildPanel() {
 
     listWrap = document.createElement('div');
     listWrap.id = 'ueeh-list-wrap';
-
-    const controls = document.createElement('div');
-    controls.id = 'ueeh-controls';
-
-    const prevBtn = document.createElement('button');
-    prevBtn.className = 'ueeh-btn ueeh-btn-prev';
-    prevBtn.innerHTML = '◀';
-    prevBtn.title = 'Previous Page';
-    prevBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(-1); });
-
-    const nextBtn = document.createElement('button');
-    nextBtn.className = 'ueeh-btn ueeh-btn-next';
-    nextBtn.textContent = 'Next Page ▶';
-    nextBtn.title = 'Go to next page (Shortcut: Alt+Right)';
-    nextBtn.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(1); });
-
-    controls.append(prevBtn, nextBtn);
 
     const jumpRow = document.createElement('div');
     jumpRow.id = 'ueeh-jump-row';
@@ -892,14 +1169,72 @@ function buildPanel() {
     footer.id = 'ueeh-footer';
     footer.innerHTML = 'Developed by <a href="https://www.torn.com/profiles.php?XID=4141121" target="_blank">sercann [4141121]</a>';
 
-    body.append(progWrap, currentPageEl, searchWrap, listWrap, jumpRow, footer);
-    panel.append(header, body, controls);
+    body.append(actionRow, progWrap, currentPageEl, searchWrap, listWrap, jumpRow, footer);
+
+    /* --- EXPANDED CONTROLS --- */
+    const controlsExpanded = document.createElement('div');
+    controlsExpanded.id = 'ueeh-controls-expanded';
+
+    const prevBtnE = document.createElement('button');
+    prevBtnE.className = 'ueeh-btn ueeh-btn-prev';
+    prevBtnE.innerHTML = '◀';
+    prevBtnE.title = 'Previous Page';
+    prevBtnE.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(-1); });
+
+    const nextBtnE = document.createElement('button');
+    nextBtnE.className = 'ueeh-btn ueeh-btn-next-exp';
+    nextBtnE.textContent = 'Next Page ▶';
+    nextBtnE.title = 'Go to next page (Shortcut: Alt+Right)';
+    nextBtnE.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(1); });
+
+    controlsExpanded.append(prevBtnE, nextBtnE);
+
+    /* --- COMPACT CONTROLS --- */
+    const controlsCompact = document.createElement('div');
+    controlsCompact.id = 'ueeh-controls-compact';
+
+    const navBtns = document.createElement('div');
+    navBtns.className = 'ueeh-nav-btns';
+
+    const prevBtnC = document.createElement('button');
+    prevBtnC.className = 'ueeh-nav-btn';
+    prevBtnC.innerHTML = '◀';
+    prevBtnC.title = 'Previous Page';
+    prevBtnC.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(-1); });
+
+    const nextBtnC = document.createElement('button');
+    nextBtnC.className = 'ueeh-nav-btn ueeh-btn-next-cmp';
+    nextBtnC.innerHTML = '▶';
+    nextBtnC.title = 'Next Page (Alt+Right)';
+    nextBtnC.addEventListener('click', (e) => { e.stopPropagation(); navigateDelta(1); });
+
+    navBtns.append(prevBtnC, nextBtnC);
+
+    const navCore = document.createElement('div');
+    navCore.id = 'ueeh-nav-core';
+
+    navStats = document.createElement('div');
+    navStats.id = 'ueeh-nav-stats';
+
+    const navTrack = document.createElement('div');
+    navTrack.id = 'ueeh-nav-track';
+
+    navProgFill = document.createElement('div');
+    navProgFill.id = 'ueeh-nav-fill';
+
+    navTrack.appendChild(navProgFill);
+    navCore.append(navStats, navTrack);
+
+    controlsCompact.append(navBtns, navCore);
+
+    panel.append(header, body, controlsExpanded, controlsCompact);
     document.body.appendChild(panel);
 
     makeDraggable(header, panel);
     updateUI();
     renderList(false);
     applyHiddenState();
+    applyBoomerMode();
 
     document.addEventListener('keydown', (e) => {
         if (e.repeat) return;
@@ -934,11 +1269,20 @@ function renderList(scrollToActive = false) {
         lbl.className = 'ueeh-page-label';
         lbl.textContent = p.label;
 
+        el.append(num, lbl);
+
+        if (p.overseas) {
+            const tag = document.createElement('span');
+            tag.className = 'ueeh-page-overseas';
+            tag.textContent = 'OVERSEAS';
+            el.appendChild(tag);
+        }
+
         const chk = document.createElement('span');
         chk.className = 'ueeh-check';
         chk.textContent = '✓';
+        el.appendChild(chk);
 
-        el.append(num, lbl, chk);
         listWrap.appendChild(el);
     });
 
@@ -962,12 +1306,10 @@ function navigateTo(idx) {
     persist();
 
     const targetUrl = 'https://www.torn.com' + PAGES[idx].url;
-    const currentUrl = window.location.href;
+    const currentBase = window.location.href.split('#')[0];
+    const targetBase = targetUrl.split('#')[0];
 
-    if (currentUrl === targetUrl) {
-        window.location.reload();
-    } else if (currentUrl.split('#')[0] === targetUrl.split('#')[0]) {
-        window.location.href = targetUrl;
+    if (currentBase === targetBase) {
         window.location.reload();
     } else {
         window.location.href = targetUrl;
@@ -975,12 +1317,19 @@ function navigateTo(idx) {
 }
 
 function updateUI() {
-    if (!progressFill) return;
     const visited = (state.visited || []).length;
     const pct = (visited / PAGES.length * 100).toFixed(1);
-    progressFill.style.width = pct + '%';
-    progressLabel.innerHTML =
-        `<span>${visited}</span> pages visited &nbsp; <span>${pct}%</span>`;
+    const left = PAGES.length - visited;
+
+    if (progressFill) progressFill.style.width = pct + '%';
+    if (progressLabel) {
+        progressLabel.innerHTML = `<span>${visited}</span> pages visited &nbsp; <span>${pct}%</span>`;
+    }
+
+    if (navProgFill) navProgFill.style.width = pct + '%';
+    if (navStats) {
+        navStats.innerHTML = `<span>Pg: ${state.idx + 1}/${PAGES.length}</span><span>Left: ${left}</span><span>${pct}%</span>`;
+    }
 
     if (jumpInput) jumpInput.value = String(state.idx + 1);
 
@@ -1043,16 +1392,16 @@ function repositionButton(btn) {
     }
 }
 
-const pageObserver = new MutationObserver((mutations) => {
-    for (const m of mutations) {
-        if (m.addedNodes.length) {
-            const root = document.querySelector(CFG.eggRoot);
-            if (root && !root.dataset.ueehHandled) {
-                setupEggDetection();
-                break;
-            }
+let obsTimer = null;
+const pageObserver = new MutationObserver(() => {
+    if (obsTimer) return;
+    obsTimer = setTimeout(() => {
+        obsTimer = null;
+        const root = document.querySelector(CFG.eggRoot);
+        if (root && !root.dataset.ueehHandled) {
+            setupEggDetection();
         }
-    }
+    }, 150);
 });
 pageObserver.observe(document.documentElement, { childList: true, subtree: true });
 
@@ -1082,6 +1431,8 @@ function buildToast() {
 
     toastEl.append(icon, text, close);
     document.body.appendChild(toastEl);
+
+    applyBoomerMode();
 }
 
 let toastTimer;
@@ -1256,6 +1607,7 @@ function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
 function init() {
     if (document.getElementById('ueeh-panel')) return;
+
     buildToast();
     buildPanel();
     setupEggDetection();
