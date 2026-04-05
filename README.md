@@ -1,5 +1,4 @@
 https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
-
 <div
   style="max-width: 850px; margin: 0 auto; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #cfd8dc; line-height: 1.6; background-color: #171a21; padding: 20px; border-radius: 12px; border: 1px solid #2a303c;"
 >
@@ -14,10 +13,31 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
     </h3>
   </div>
   <div style="text-align: center; margin: 30px 0;">
-    <a href="https://editor.torn.com/b69067c5-b03a-460f-8aa8-e402ed86fd42-4141121.png" target="_blank" rel="noopener"
+    <a class="full" href="https://editor.torn.com/4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png" rel="page_thread"
       ><img
-        src="https://editor.torn.com/b69067c5-b03a-460f-8aa8-e402ed86fd42-4141121.png"
-        alt="b69067c5-b03a-460f-8aa8-e402ed86fd42-4141121.png"
+        src="https://editor.torn.com/4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png"
+        alt="4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png"
+    /></a>
+  </div>
+  <div style="text-align: center; margin: 30px 0;">
+    <a class="full" href="https://editor.torn.com/2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png" rel="page_thread"
+      ><img
+        src="https://editor.torn.com/2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png"
+        alt="2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png"
+    /></a>
+  </div>
+  <div style="text-align: center; margin: 30px 0;">
+    <a class="full" href="https://editor.torn.com/773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png" rel="page_thread"
+      ><img
+        src="https://editor.torn.com/773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png"
+        alt="773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png"
+    /></a>
+  </div>
+  <div style="text-align: center; margin: 30px 0;">
+    <a class="full" href="https://editor.torn.com/cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png" rel="page_thread"
+      ><img
+        src="https://editor.torn.com/cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png"
+        alt="cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png"
     /></a>
   </div>
   <div style="padding: 20px; border-left: 5px solid #e67e22; background-color: #1e232d; margin-bottom: 30px;">
@@ -141,11 +161,16 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
       style="background-color: #1e232d; padding: 15px; border-radius: 8px; border: 1px solid #2a303c; font-size: 14px;"
     >
       <ul style="list-style-type: none; padding: 0; margin: 0; color: #e0e0e0;">
-        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>invidiousmind</strong></li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>DaGRETT</strong></li>
         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-          <strong>Colorau</strong> <span style="color: #f1c40f;">&mdash;</span>
-          <i>"One of many payouts for your work"</i>
+          <strong>_B_</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Egg hunter, thanks"</i>
         </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>coolskull007</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i>"egg script ty &lt;3 keep it up friend"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>invidiousmind</strong></li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>Colorau</strong></li>
         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
           <strong>Etzell</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"The egg hunt script is amazing!"</i>
         </li>
@@ -199,9 +224,7 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
           <strong>ClubsOG</strong> <span style="color: #f1c40f;">&mdash;</span>
           <i>"Love your Easter egg script, thank you!"</i>
         </li>
-        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
-          <strong>ObsceneOlive </strong> <span style="color: #f1c40f;">&mdash;</span> <i>"For the EE Script"</i>
-        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>ObsceneOlive </strong></li>
         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
           <strong>StanleyCheeks </strong> <span style="color: #f1c40f;">&mdash;</span>
           <i>"Thanks for the help and the great script!"</i>
@@ -279,7 +302,18 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
 </div>
 <p>&nbsp;</p>
 <p>📜 <strong>Patch History</strong></p>
+<p>&nbsp;</p>
 <ul>
+  <li>
+    <strong
+      ><a
+        href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;start=60&amp;to=27195447"
+        target="_blank"
+        rel="noopener"
+        >v1.6</a
+      >&nbsp;&mdash; Added "Boomer Mode" for AI &amp; Modern UI haters.</strong
+    >
+  </li>
   <li>
     <p>
       <strong
