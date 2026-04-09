@@ -13,28 +13,28 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
     </h3>
   </div>
   <div style="text-align: center; margin: 30px 0;">
-    <a class="full" href="https://editor.torn.com/4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png" rel="page_thread"
+    <a href="https://editor.torn.com/4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png" target="_blank" rel="noopener"
       ><img
         src="https://editor.torn.com/4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png"
         alt="4b5380eb-36fc-483f-9938-52271e0d4bdb-4141121.png"
     /></a>
   </div>
   <div style="text-align: center; margin: 30px 0;">
-    <a class="full" href="https://editor.torn.com/2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png" rel="page_thread"
+    <a href="https://editor.torn.com/2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png" target="_blank" rel="noopener"
       ><img
         src="https://editor.torn.com/2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png"
         alt="2dbb16c3-b835-4cf4-a29d-b84ac6617b4b-4141121.png"
     /></a>
   </div>
   <div style="text-align: center; margin: 30px 0;">
-    <a class="full" href="https://editor.torn.com/773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png" rel="page_thread"
+    <a href="https://editor.torn.com/773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png" target="_blank" rel="noopener"
       ><img
         src="https://editor.torn.com/773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png"
         alt="773c0843-4a36-47e2-9f79-fa97fe1d9096-4141121.png"
     /></a>
   </div>
   <div style="text-align: center; margin: 30px 0;">
-    <a class="full" href="https://editor.torn.com/cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png" rel="page_thread"
+    <a href="https://editor.torn.com/cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png" target="_blank" rel="noopener"
       ><img
         src="https://editor.torn.com/cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png"
         alt="cc5f3391-6ccb-471d-838e-47fbaf343c9a-4141121.png"
@@ -43,11 +43,15 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <div style="padding: 20px; border-left: 5px solid #e67e22; background-color: #1e232d; margin-bottom: 30px;">
     <h2 style="margin-top: 0; color: #e67e22; font-size: 22px;">❓ Why is this the "Ultimate" script?</h2>
     <p style="margin-bottom: 0; font-size: 15px;">
-      During the Easter Event, Torn servers struggle and page loads get incredibly messy. Standard scripts break when
-      you navigate through <strong>SPA (Single Page Application)</strong> pages like <i>Crimes 2.0</i> or
-      <i>Factions</i>, causing you to miss eggs.<br /><br /><strong>Ultimate Easter Egg Hunter</strong> is engineered
-      from the ground up to completely bypass these issues, ensuring you <strong>never miss a single egg</strong> while
-      providing a flawless, lag-resistant user experience.
+      <span style="color: var(--te-text-color-gray4);"
+        >During the Easter Event, Torn servers struggle and page loads get incredibly messy. Standard scripts break when
+        you navigate through <strong>SPA (Single Page Application)</strong> pages like <i>Crimes 2.0</i> or
+        <i>Factions</i>, causing you to miss eggs.</span
+      ><br /><br /><span style="color: var(--te-text-color-gray4);"
+        ><strong>Ultimate Easter Egg Hunter</strong> is engineered from the ground up to completely bypass these issues,
+        ensuring you <strong>never miss a single egg</strong> while providing a flawless, lag-resistant user
+        experience.</span
+      >
     </p>
   </div>
   <h2 style="color: #f5d060; border-bottom: 2px solid #2a303c; padding-bottom: 10px; margin-bottom: 20px;">
@@ -119,7 +123,7 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <div
     style="text-align: center; padding: 40px 20px; background-color: #1e232d; border-radius: 10px; margin-bottom: 30px; border: 1px solid #2a303c;"
   >
-    <h2 style="margin-top: 0; color: #cfd8dc; font-size: 24px;">📥 Ready to Hunt?</h2>
+    <h2 style="margin-top: 0px; color: rgb(207, 216, 220); font-size: 24px; text-align: center;">📥 Ready to Hunt?</h2>
     <a
       style="display: inline-block; padding: 15px 35px; background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); color: #fff; text-decoration: none; font-size: 20px; font-weight: bold; border-radius: 30px;"
       href="https://greasyfork.org/tr/scripts/572147-ultimate-easter-egg-hunter"
@@ -161,6 +165,49 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
       style="background-color: #1e232d; padding: 15px; border-radius: 8px; border: 1px solid #2a303c; font-size: 14px;"
     >
       <ul style="list-style-type: none; padding: 0; margin: 0; color: #e0e0e0;">
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>Jukoabee</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i
+            >"Almost forgot to thank you. Found 10 eggs thanks to you. Going to keep using script for quick Navigation
+            between pages"</i
+          >
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>Ghxst</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i>"For the egg script, lovely script really helped to find eggs &lt;3"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>DrinksTooMuch</strong></li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>DuckOfDestiny</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i>"Thank you for Egg Hunter script"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>XxHelixX</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i>"Your script in my opinion way better than the others gg keep up the good work"</i>
+        </li>
+        <li><strong>Veergun</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Awesome script. Thanks"</i></li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>Smilin-Assassin</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Lovely tool!"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>HaychyBaby</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Dope Script dude"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>ST4TIC</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Appreciation for the Script"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>SmackWhite</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Ty for the script"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>Jobby</strong> <span style="color: #f1c40f;">&mdash;</span>
+          <i>"Love the script, keep up the good work"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>daonioneater</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"what a guy. nice script"</i>
+        </li>
+        <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
+          <strong>TrivialBrett</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Thanks for the script"</i>
+        </li>
         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);"><strong>DaGRETT</strong></li>
         <li style="padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);">
           <strong>_B_</strong> <span style="color: #f1c40f;">&mdash;</span> <i>"Egg hunter, thanks"</i>
@@ -286,10 +333,14 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   </div>
   <div style="text-align: center; font-size: 12px; color: #7f8c8d; border-top: 1px solid #2a303c; padding-top: 20px;">
     <p style="margin: 0 0 10px 0;">
-      ✅ <i>Completely compliant with Torn's Acceptable Use Policy. Zero background requests, strictly DOM-based.</i>
+      ✅<span style="color: var(--te-text-color-gray4);">
+        <i
+          >Completely compliant with Torn's Acceptable Use Policy. Zero background requests, strictly DOM-based.</i
+        ></span
+      >
     </p>
     <p style="margin: 0;">
-      Developed with ❤️ by
+      <span style="color: var(--te-text-color-gray4);">Developed with ❤️ by</span>
       <a
         style="color: #e67e22; text-decoration: none; font-weight: bold;"
         href="/profiles.php?XID=4141121"
@@ -317,12 +368,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;start=60&amp;to=27191630"
           target="_blank"
           rel="noopener"
           >v1.5</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Added 20+ new pages, removed Christmas Town, introduced an ultra-compact mobile UI with inline stats, and
       added OVERSEAS tags. 🎉 <i>Thank you for 3,000+ downloads!</i>
@@ -331,12 +382,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;start=40&amp;to=27184171"
           target="_blank"
           rel="noopener"
           >v1.4.5</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Resolved a silent collection error and implemented an anti-spam button lock, ensuring flawless egg
       collection without server crashes.
@@ -345,12 +396,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;start=40&amp;to=27182652"
           target="_blank"
           rel="noopener"
           >v1.4.3</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Purged duplicate/invalid links for a highly optimized list, disabled annoying auto-scroll in the menu, and
       added compact navigation arrows for mobile.
@@ -359,12 +410,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;start=20&amp;to=27182439"
           target="_blank"
           rel="noopener"
           >v1.3</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Fixed tab switching issues (Armory/Rules), corrected inaccurate page names, and added a safeguard against
       keyboard key spamming.
@@ -373,12 +424,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;to=27182058"
           target="_blank"
           rel="noopener"
           >v1.2.1</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Hotfix for an infinite reload loop caused by strict browser privacy settings (Brave Shields/Incognito)
       blocking local storage.
@@ -387,12 +438,12 @@ https://www.torn.com/forums.php#/p=threads&f=67&t=16552267&b=0&a=0
   <li>
     <p>
       <strong
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><a
+        ><a
           href="/forums.php#/p=threads&amp;f=67&amp;t=16552267&amp;b=0&amp;a=0&amp;to=27181834"
           target="_blank"
           rel="noopener"
           >v1.2</a
-        ><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----><!----></strong
+        ></strong
       >
       &mdash; Introduced a draggable UI and completely overhauled background processes for significantly better RAM/CPU
       performance and zero lag.
